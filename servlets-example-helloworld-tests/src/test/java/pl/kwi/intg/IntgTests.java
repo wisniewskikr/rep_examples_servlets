@@ -3,14 +3,6 @@ package pl.kwi.intg;
 
 import java.io.File;
 
-
-
-
-
-
-
-
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.junit.Arquillian;
@@ -65,7 +57,7 @@ public class IntgTests {
         	    .as(GenericArchive.class),  
         	    "/", Filters.includeAll());  
          
-        System.out.println(war.toString(true));
+//        System.out.println(war.toString(true));
          
         return war;
     }

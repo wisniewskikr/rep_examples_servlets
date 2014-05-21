@@ -20,6 +20,15 @@ Recommended usage of project:
 Browser url:
 http://localhost:8080/servlets-example-helloworld-tests
 
+Recommended usage of unit tests:
+---------------------------------------
+Maven command:
+mvn clean install -Punit 
+
+Recommended usage of integration tests:
+---------------------------------------
+Maven command:
+mvn clean install -Pintg 
 
 
 
@@ -82,6 +91,34 @@ You can do it using following steps:
 
 
 
+UNIT TESTS
+==========
+
+To run unit tests you have to use maven command:
+
+		mvn clean install -Punit
+
+
+
+
+
+INTEGRATION TESTS
+=================
+
+This project has set of integration tests based on Selenium tool. To run integration tests you have to:
+
+- Configure embedded Tomcat port (optional)
+In file <project_home>/project.properties you can change embedded Tomcat port.
+Update property "loc.test.intg.port". By default it is "8181".
+
+- Run integration tests
+To run integration tests you have to use maven command:
+			mvn clean install -Pintg 
+			
+			
+			
+			
+			
 USAGE
 =====
 
