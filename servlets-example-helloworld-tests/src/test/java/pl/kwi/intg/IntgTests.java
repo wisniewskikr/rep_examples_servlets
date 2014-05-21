@@ -37,6 +37,9 @@ public class IntgTests {
 	WebDriver driver;
 	
 	
+	// ATTENTION!!!
+	// Parameter "testable = false" is very important and 
+	// makes that @Drone is not null
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
         File[] lib = Maven
