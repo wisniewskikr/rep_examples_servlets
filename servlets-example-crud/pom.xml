@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>pl.kwi</groupId>
+    <artifactId>servlets-example-crud</artifactId>
+    <packaging>war</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>Servlet 3 Web Application</name>
+    <url>http://maven.apache.org</url>
+
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java-version>1.6</java-version>
+        <project.properties.file>project.properties</project.properties.file>
+    </properties>
+    
+    
+    <profiles>
+	
+		<!-- Profile 'loc' (abbreviation for 'local'): location profile. 
+		Indicates local computer as a place for task profiles. -->
+		<profile>
+			<id>loc</id>			
+			<properties>
+				<!-- Server data -->
+				<server.url>${loc.server.url}</server.url>
+				<server.username>${loc.server.username}</server.username>
+				<server.password>${loc.server.password}</server.password>
+				<server.path>/${project.artifactId}</server.path>
+			</properties>							
+		</profile>
+		
+		<!-- Profile 'deploy': task profile.
+		Deploys project on computer indicated by location profile. -->
+		<profile>
+			<id>deploy</id>									
+			<build>
+				<plugins>					
+					<plugin>
+				        <groupId>org.apache.tomcat.maven</groupId>
+		          		<artifactId>tomcat7-maven-plugin</artifactId>
+		          		<version>2.0</version>
+				        <executions>
+				        	<execution>
+				        		<phase>pre-integration-test</phase>
+				        		<goals>
+				        			<goal>deploy</goal>
+				        		</goals>
+				        	</execution>
+				        </executions>
+				        <configuration>
+				        	<url>${server.url}</url>
+				        	<username>${server.username}</username>
+		          			<password>${server.password}</password>
+		          			<path>${server.path}</path>
+                            <update>true</update>
+				        </configuration>
+				      </plugin>			          
+				</plugins>
+			</build>						
+		</profile>
+	
+	</profiles>
+	
+	
+	
+	<build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <plugins>
+        
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>${java-version}</source>
+                    <target>${java-version}</target>
+                </configuration>
+            </plugin>
+            
+            <!-- Pluging removing web.xml file -->
+            <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-war-plugin</artifactId>
+		        <configuration>
+		          <failOnMissingWebXml>false</failOnMissingWebXml>
+		        </configuration>
+		      </plugin>
+            
+            <!-- Plugin for reading properties from
+			external file -->
+			<plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>properties-maven-plugin</artifactId>
+		        <version>1.0-alpha-2</version>
+		        <executions>
+		          <execution>
+		            <phase>initialize</phase>
+		            <goals>
+		              <goal>read-project-properties</goal>
+		            </goals>
+		            <configuration>
+		              <files>
+		                <file>${project.properties.file}</file>
+		              </files>
+		            </configuration>
+		          </execution>
+		        </executions>
+		      </plugin>
+            
+        </plugins>
+        
+        <pluginManagement>
+        	<plugins>
+        		<!-- This plugin removes Exlipse errors.
+        		This plugin's configuration is used to store Eclipse m2e settings only. 
+        		It has no influence on the Maven build itself.-->
+        		<plugin>
+        			<groupId>org.eclipse.m2e</groupId>
+        			<artifactId>lifecycle-mapping</artifactId>
+        			<version>1.0.0</version>
+        			<configuration>
+        				<lifecycleMappingMetadata>
+        					<pluginExecutions>
+        						<pluginExecution>
+        							<pluginExecutionFilter>
+        								<groupId>
+        									org.codehaus.mojo
+        								</groupId>
+        								<artifactId>
+        									properties-maven-plugin
+        								</artifactId>
+        								<versionRange>
+        									[1.0-alpha-2,)
+        								</versionRange>
+        								<goals>
+        									<goal>
+        										read-project-properties
+        									</goal>
+        								</goals>
+        							</pluginExecutionFilter>
+        							<action>
+        								<ignore></ignore>
+        							</action>
+        						</pluginExecution>
+        					</pluginExecutions>
+        				</lifecycleMappingMetadata>
+        			</configuration>
+        		</plugin>
+        	</plugins>
+        </pluginManagement>
+	</build>
+    
+    
+
+    <dependencies>
+    
+        <!-- Servlet 3.0 API -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JSTL dependencies --> 
+        <dependency>
+                <groupId>taglibs</groupId>
+                <artifactId>standard</artifactId>
+                <version>1.1.2</version>
+        </dependency>         
+        <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>jstl</artifactId>
+                <version>1.1.2</version>
+        </dependency>
+		
+		<!-- Commons dependencies with for instance
+		StringUtils -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.0</version>
+		</dependency>
+		
+    </dependencies>
+    
+    
+    
+    <!-- JBoss repository for weld library -->
+	<repositories>
+		<repository>
+			<id>jboss-public-repository-group</id>
+			<name>JBoss Public Maven Repository Group</name>
+			<url>http://repository.jboss.org/nexus/content/groups/public</url>
+			<layout>default</layout>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+				<updatePolicy>never</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+    
+</project>
