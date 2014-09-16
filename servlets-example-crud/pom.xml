@@ -8,6 +8,9 @@
 	
 	
 	<properties>
+		<hibernate.version>4.1.7.Final</hibernate.version>
+		<hibernate.validator.version>4.3.0.Final</hibernate.validator.version>
+	
 		<main.db.persistence-unit.name>pu</main.db.persistence-unit.name>
 		<main.db.url>jdbc:mysql://localhost:3306/servlets_example_crud</main.db.url>
 		<main.db.driver>com.mysql.jdbc.Driver</main.db.driver>
@@ -94,27 +97,22 @@
 			<version>1.4.2</version>
 		</dependency>
 		
-		<!-- JPA libraries -->
+		<!-- Hibernate dependencies -->
 		<!-- Set as "provided" for JBoss - there is it own hibernate -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>3.3.2.GA</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<version>3.4.0.GA</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-commons-annotations</artifactId>
-			<version>3.3.0.ga</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>3.4.0.GA</version>
+		 <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		    <version>${hibernate.validator.version}</version>
 		</dependency>
 				
 		<!-- Tests libraries -->
