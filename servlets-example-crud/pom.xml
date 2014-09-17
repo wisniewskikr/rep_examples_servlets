@@ -8,6 +8,10 @@
 	
 	
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java-version>1.6</java-version>
+        <project.properties.file>project.properties</project.properties.file>
+		
 		<hibernate.version>4.1.7.Final</hibernate.version>
 		<hibernate.validator.version>4.3.0.Final</hibernate.validator.version>
 	
@@ -23,6 +27,54 @@
 		<test.db.username>root</test.db.username>
 		<test.db.password>admin</test.db.password>
 	</properties>
+	
+	
+	<profiles>
+	
+		<!-- Profile 'loc' (abbreviation for 'local'): location profile. 
+		Indicates local computer as a place for task profiles. -->
+		<profile>
+			<id>loc</id>			
+			<properties>
+				<!-- Server data -->
+				<server.url>${loc.server.url}</server.url>
+				<server.username>${loc.server.username}</server.username>
+				<server.password>${loc.server.password}</server.password>
+				<server.path>/${project.artifactId}</server.path>
+			</properties>							
+		</profile>
+		
+		<!-- Profile 'deploy': task profile.
+		Deploys project on computer indicated by location profile. -->
+		<profile>
+			<id>deploy</id>									
+			<build>
+				<plugins>					
+					<plugin>
+				        <groupId>org.apache.tomcat.maven</groupId>
+		          		<artifactId>tomcat7-maven-plugin</artifactId>
+		          		<version>2.0</version>
+				        <executions>
+				        	<execution>
+				        		<phase>pre-integration-test</phase>
+				        		<goals>
+				        			<goal>deploy</goal>
+				        		</goals>
+				        	</execution>
+				        </executions>
+				        <configuration>
+				        	<url>${server.url}</url>
+				        	<username>${server.username}</username>
+		          			<password>${server.password}</password>
+		          			<path>${server.path}</path>
+                            <update>true</update>
+				        </configuration>
+				      </plugin>			          
+				</plugins>
+			</build>						
+		</profile>
+	
+	</profiles>
 	
 	
 	<build>
@@ -64,7 +116,69 @@
 			          </systemPropertyVariables>
 				</configuration>
 			</plugin>
+			
+			<!-- Plugin for reading properties from
+			external file -->
+			<plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>properties-maven-plugin</artifactId>
+		        <version>1.0-alpha-2</version>
+		        <executions>
+		          <execution>
+		            <phase>initialize</phase>
+		            <goals>
+		              <goal>read-project-properties</goal>
+		            </goals>
+		            <configuration>
+		              <files>
+		                <file>${project.properties.file}</file>
+		              </files>
+		            </configuration>
+		          </execution>
+		        </executions>
+		      </plugin>
+		      
 		</plugins>
+		
+		<pluginManagement>
+        	<plugins>
+        		<!-- This plugin removes Exlipse errors.
+        		This plugin's configuration is used to store Eclipse m2e settings only. 
+        		It has no influence on the Maven build itself.-->
+        		<plugin>
+        			<groupId>org.eclipse.m2e</groupId>
+        			<artifactId>lifecycle-mapping</artifactId>
+        			<version>1.0.0</version>
+        			<configuration>
+        				<lifecycleMappingMetadata>
+        					<pluginExecutions>
+        						<pluginExecution>
+        							<pluginExecutionFilter>
+        								<groupId>
+        									org.codehaus.mojo
+        								</groupId>
+        								<artifactId>
+        									properties-maven-plugin
+        								</artifactId>
+        								<versionRange>
+        									[1.0-alpha-2,)
+        								</versionRange>
+        								<goals>
+        									<goal>
+        										read-project-properties
+        									</goal>
+        								</goals>
+        							</pluginExecutionFilter>
+        							<action>
+        								<ignore></ignore>
+        							</action>
+        						</pluginExecution>
+        					</pluginExecutions>
+        				</lifecycleMappingMetadata>
+        			</configuration>
+        		</plugin>
+        	</plugins>
+        </pluginManagement>
 	</build>
 
 
