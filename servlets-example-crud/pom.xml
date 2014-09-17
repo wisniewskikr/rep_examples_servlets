@@ -13,12 +13,6 @@
 		
 		<hibernate.version>4.1.7.Final</hibernate.version>
 		<hibernate.validator.version>4.3.0.Final</hibernate.validator.version>
-	
-		<main.db.persistence-unit.name>pu</main.db.persistence-unit.name>
-		<main.db.url>jdbc:mysql://localhost:3306/servlets_example_crud</main.db.url>
-		<main.db.driver>com.mysql.jdbc.Driver</main.db.driver>
-		<main.db.username>root</main.db.username>
-		<main.db.password>admin</main.db.password>		
 	</properties>
 	
 	
