@@ -5,21 +5,19 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import pl.kwi.entities.UserEntity;
 import pl.kwi.services.UserService;
 
+@WebServlet(value="/table.do")
 public class TableServlet extends HttpServlet{
 	
 	
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = LoggerFactory.getLogger(TableServlet.class);
 	private UserService userService;
 	
 	

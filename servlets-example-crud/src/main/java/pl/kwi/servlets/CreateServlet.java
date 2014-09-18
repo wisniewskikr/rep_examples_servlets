@@ -4,21 +4,19 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import pl.kwi.entities.UserEntity;
 import pl.kwi.services.UserService;
 
+@WebServlet(value="/create.do")
 public class CreateServlet extends HttpServlet{
 	
 	
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = LoggerFactory.getLogger(CreateServlet.class);
 	private UserService userService;
 	
 	
@@ -59,7 +57,7 @@ public class CreateServlet extends HttpServlet{
 		
 		UserEntity entity = new UserEntity();
 		entity.setName(userName);		
-		long id = userService.createUser(entity);
+		userService.createUser(entity);
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/table.do?submit=Display");
 		requestDispatcher.forward(request, response);
