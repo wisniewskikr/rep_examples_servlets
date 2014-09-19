@@ -1,0 +1,127 @@
+.page {
+	width: 350px;
+	height: 250px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	text-align: center;
+	border: 3px solid #ECECEC;
+	-webkit-border-radius: 10px;
+	padding: 30px 30px;
+	font-family: "Open Sans", Verdana, sans-serif;
+	color: #5F5F5F;
+}
+
+.content {
+	margin-bottom: 20px;
+}
+
+.contentElement {
+	text-align: left;
+	height: 80px;
+}
+
+.text {
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.input {
+	margin-bottom: 10px;
+}
+
+.description {
+	font-size: 12px;
+}
+
+.input input {
+	width: 330px;
+	border: 1px solid #CCC;
+	padding: 5px 10px;
+	font-size: 1em;
+	-webkit-border-radius: 4px;
+	display: block;
+}
+
+.buttons input {
+	color: white;
+	border: 1px solid #5F5F5F;
+	background: #5F5F5F;
+	font-weight: bold;
+	padding: 7px 9px 7px 9px;
+	border-radius: .5em;
+}
+
+.error {
+	color: red;
+	float: right;
+}
+
+.errorBlock {
+	min-height: 20px;
+}
+
+.errorMessage {
+	color: red;
+}
+
+.listHeader {
+	border-bottom: 3px solid #ECECEC;
+	text-align: left;
+}
+
+.listHeader ul{
+	margin-bottom: 0px;
+	margin-left: 0px;
+	padding-left: 0px;
+}
+
+.listHeaderTitle {
+	display: inline-block;
+	border: 3px solid #ECECEC;
+	border-bottom-style: none;
+	border-radius: 3px 3px 0 0;
+	padding: 0 20px 0 20px;
+	background-color: white;
+	margin-bottom: -3px;
+}
+
+.listActions {
+	border-bottom: 3px solid #ECECEC;
+	text-align: right;
+}
+
+.listActions ul{
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-top: 3px;
+}
+
+.listActions ul li{
+	display: inline-block;
+	margin-left: 3px;
+}
+
+.listActions ul li a{
+	color: #5F5F5F;
+}
+
+.listActions ul li a:HOVER{
+	font-weight: bolder;
+}
+
+.listItems div {
+	border-bottom: 1px solid #ECECEC;
+	text-align: left;
+}
+
+.listItems input {
+	margin-left: 10px;
+}
+
+.listItems label {
+	padding-left: 30px;
+}
