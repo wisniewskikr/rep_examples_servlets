@@ -46,7 +46,7 @@ public class CreateServlet extends HttpServlet{
 	
 	private void displayPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("jsp/CreateJSP.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("pages/CreateJSP.jsp");
 		requestDispatcher.forward(request, response);
 		
 	}

@@ -49,7 +49,7 @@ public class ViewServlet extends HttpServlet{
 		request.setAttribute("userName", entity.getName());
 		request.setAttribute("id", entity.getId());
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("jsp/ViewJSP.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("pages/ViewJSP.jsp");
 		requestDispatcher.forward(request, response);
 		
 	}

@@ -52,7 +52,7 @@ public class EditServlet extends HttpServlet{
 		request.setAttribute("userName", entity.getName());
 		request.setAttribute("id", entity.getId());
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("jsp/EditJSP.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("pages/EditJSP.jsp");
 		requestDispatcher.forward(request, response);
 		
 	}

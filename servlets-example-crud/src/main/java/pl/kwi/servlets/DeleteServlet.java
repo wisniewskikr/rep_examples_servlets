@@ -53,7 +53,7 @@ public class DeleteServlet extends HttpServlet{
 		request.setAttribute("userName", entity.getName());
 		request.setAttribute("id", entity.getId());
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("jsp/DeleteJSP.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("pages/DeleteJSP.jsp");
 		requestDispatcher.forward(request, response);
 		
 	}

@@ -56,7 +56,7 @@ public class TableServlet extends HttpServlet{
 		List<UserEntity> users = userService.getUserList();		
 		request.setAttribute("users", users);
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("jsp/TableJSP.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("pages/TableJSP.jsp");
 		requestDispatcher.forward(request, response);
 		
 	}
