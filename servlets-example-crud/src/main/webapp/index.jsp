@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Hello World</title>
 
-<META HTTP-EQUIV="Refresh" CONTENT="0; URL=table.do?submit=Display">
+<META HTTP-EQUIV="Refresh" CONTENT="0; URL=table.do?action=Display">
 
 </head>
 </html>

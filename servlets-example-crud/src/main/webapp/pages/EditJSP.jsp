@@ -2,38 +2,45 @@
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>		
 
 <html>
+
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Hello</title>
+	<title>Hello World</title>
+	<link type="text/css" rel="stylesheet" href="css/style.css">
+	<link type="text/css" rel="stylesheet" href="css/jquery-ui-1.10.3/smoothness/jquery-ui-1.10.3.custom.css">
+	<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.10.3.custom.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>	
 </head>
 
+
 <body>
-<form action="edit.do">
-<div style="width: 400px; font-family: Arial; font-size: 9pt;">
-	<input type="hidden" id="id" name="id" value="${requestScope.id}"/>	
-	
-	<table>
-		<tr>
-			<td colspan="2" style="padding-bottom: 10px;">
-				<h2>Hello World Servlets JPA</h2>
-				<h3>Site: <b>Edit</b></h3>
-			</td>
-		</tr>
-		<tr>
-			<td>Type your name:</td>
-			<td><input type="text" id="userName" name="userName" value="${requestScope.userName}" size="10"/></td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<input type="submit" id="submit" name="submit" value="OK"/>
-				<input type="submit" id="back" name="submit" value="Back"/>
-			</td>
-		</tr>		
-	</table>
-</div>
+<form id="form" action="edit.do">
+	<input type="hidden" id="action" name="action"/>
+	<input type="hidden" id="userId" name="userId" value="${requestScope.user.id}"/>
+
+	<div class="page">
+		<div id="title" class="title"><h2>Hello World</h2></div>
+		<div id="subtitle" class="subtitle"><h3>Page: <b>Edit</b></h3></div>
+		<div class="content">
+			<div class="contentElement">
+				<div class="text">Selected name is: <c:if test="${not empty requestScope.errorMessages}"><span id="name.errors" class="error">${requestScope.errorMessages.name}</span></c:if> </div>
+				<div class="input"><input type="text" id="name" name="name" value="${requestScope.user.name}"/></div>
+				<div class="description">You can edit name here</div>
+			</div>
+			
+		</div>
+		<div class="buttons">
+			<input type="button" id="update" name="update" value="Update" onclick="send('Update');" title="Update name"/>
+			<input type="button" id="back" name="back" value="Back" onclick="send('Back');" title="Go back to list of users"/>
+		</div>
+	</div>		
+
 </form>
 </body>
+
 
 </html>

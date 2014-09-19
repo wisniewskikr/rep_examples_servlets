@@ -29,15 +29,15 @@ public class CreateServlet extends HttpServlet{
 	public void service(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
 		
-		String submit = request.getParameter("submit");
+		String action = request.getParameter("action");
 		
-		if("Display".equals(submit)){
+		if("Display".equals(action)){
 			displayPage(request, response);
 			return;
-		}else if("OK".equals(submit)){
-			handleOkButton(request, response);
+		}else if("Create".equals(action)){
+			handleCreateButton(request, response);
 			return;
-		}else if("Back".equals(submit)){
+		}else if("Back".equals(action)){
 			handleBackButton(request, response);
 			return;
 		}
@@ -46,12 +46,12 @@ public class CreateServlet extends HttpServlet{
 	
 	private void displayPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("pages/CreateJSP.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("pages/createJsp.jsp");
 		requestDispatcher.forward(request, response);
 		
 	}
 	
-	private void handleOkButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	private void handleCreateButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		String userName = request.getParameter("userName");
 		
@@ -59,14 +59,14 @@ public class CreateServlet extends HttpServlet{
 		entity.setName(userName);		
 		userService.createUser(entity);
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/table.do?submit=Display");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/table.do?action=Display");
 		requestDispatcher.forward(request, response);
 		
 	}
 	
 	private void handleBackButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/table.do?submit=Display");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/table.do?action=Display");
 		requestDispatcher.forward(request, response);
 		
 	}

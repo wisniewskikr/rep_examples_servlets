@@ -28,15 +28,15 @@ public class EditServlet extends HttpServlet{
 	public void service(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
 		
-		String submit = request.getParameter("submit");
+		String action = request.getParameter("action");
 		
-		if("Display".equals(submit)){
+		if("Display".equals(action)){
 			displayPage(request, response);
 			return;
-		}else if("OK".equals(submit)){
+		}else if("OK".equals(action)){
 			handleOkButton(request, response);
 			return;
-		}else if("Back".equals(submit)){
+		}else if("Back".equals(action)){
 			handleBackButton(request, response);
 			return;
 		}
@@ -52,7 +52,7 @@ public class EditServlet extends HttpServlet{
 		request.setAttribute("userName", entity.getName());
 		request.setAttribute("id", entity.getId());
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("pages/EditJSP.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("pages/editJsp.jsp");
 		requestDispatcher.forward(request, response);
 		
 	}
@@ -67,14 +67,14 @@ public class EditServlet extends HttpServlet{
 		entity.setName(userName);
 		userService.updateUser(entity);
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/table.do?submit=Display");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/table.do?action=Display");
 		requestDispatcher.forward(request, response);
 		
 	}
 	
 	private void handleBackButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/table.do?submit=Display");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/table.do?action=Display");
 		requestDispatcher.forward(request, response);
 		
 	}

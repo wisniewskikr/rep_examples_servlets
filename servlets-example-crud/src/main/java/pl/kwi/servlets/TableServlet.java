@@ -30,21 +30,21 @@ public class TableServlet extends HttpServlet{
 	public void service(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
 		
-		String submit = request.getParameter("submit");
+		String action = request.getParameter("action");
 		
-		if("Display".equals(submit)){
+		if("Display".equals(action)){
 			displayPage(request, response);
 			return;
-		}else if("Create".equals(submit)){
+		}else if("Create".equals(action)){
 			handleCreateButton(request, response);
 			return;
-		}else if("View".equals(submit)){
+		}else if("View".equals(action)){
 			handleViewButton(request, response);
 			return;
-		}else if("Edit".equals(submit)){
+		}else if("Edit".equals(action)){
 			handleEditButton(request, response);
 			return;
-		}else if("Delete".equals(submit)){
+		}else if("Delete".equals(action)){
 			handleDeleteButton(request, response);
 			return;
 		}
@@ -56,14 +56,14 @@ public class TableServlet extends HttpServlet{
 		List<UserEntity> users = userService.getUserList();		
 		request.setAttribute("users", users);
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("pages/TableJSP.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("pages/tableJsp.jsp");
 		requestDispatcher.forward(request, response);
 		
 	}
 	
 	private void handleCreateButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/create.do?submit=Display");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/create.do?action=Display");
 		requestDispatcher.forward(request, response);
 		
 	}
@@ -72,7 +72,7 @@ public class TableServlet extends HttpServlet{
 		
 		String id = request.getParameter("id");
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/view.do?submit=Display&id=" + id);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/view.do?action=Display&id=" + id);
 		requestDispatcher.forward(request, response);
 		
 	}
@@ -81,7 +81,7 @@ public class TableServlet extends HttpServlet{
 		
 		String id = request.getParameter("id");
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/edit.do?submit=Display&id=" + id);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/edit.do?action=Display&id=" + id);
 		requestDispatcher.forward(request, response);
 		
 	}	
@@ -90,7 +90,7 @@ public class TableServlet extends HttpServlet{
 		
 		String id = request.getParameter("id");
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/delete.do?submit=Display&id=" + id);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/delete.do?action=Display&id=" + id);
 		requestDispatcher.forward(request, response);
 		
 	}

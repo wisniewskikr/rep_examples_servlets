@@ -3,13 +3,13 @@ $(function() {
 });
 
 /**
- * Function sends form with specified action.
+ * Function sends form with specified 'action' field.
  * 
- * @param action object String with action
+ * @param action object String with 'action' field
  */
 function send(action){
-	document.form.action = action;
-	document.form.submit();	
+	$('#action').val(action);
+	$('#form').submit();	
 }
 
 /**
