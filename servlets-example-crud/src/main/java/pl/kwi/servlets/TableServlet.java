@@ -70,7 +70,7 @@ public class TableServlet extends HttpServlet{
 	
 	private void handleViewButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		String id = request.getParameter("id");
+		String id = request.getParameter("selectedUsersIds");
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/view.do?action=Display&id=" + id);
 		requestDispatcher.forward(request, response);
@@ -79,7 +79,7 @@ public class TableServlet extends HttpServlet{
 	
 	private void handleEditButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		String id = request.getParameter("id");
+		String id = request.getParameter("selectedUsersIds");
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/edit.do?action=Display&id=" + id);
 		requestDispatcher.forward(request, response);
@@ -88,7 +88,7 @@ public class TableServlet extends HttpServlet{
 	
 	private void handleDeleteButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		String id = request.getParameter("id");
+		String id = request.getParameter("selectedUsersIds");
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/delete.do?action=Display&id=" + id);
 		requestDispatcher.forward(request, response);

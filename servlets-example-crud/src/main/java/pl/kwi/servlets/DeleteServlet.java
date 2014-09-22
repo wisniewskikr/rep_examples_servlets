@@ -34,8 +34,8 @@ public class DeleteServlet extends HttpServlet{
 		if("Display".equals(action)){
 			displayPage(request, response);
 			return;
-		}else if("OK".equals(action)){
-			handleOkButton(request, response);
+		}else if("Delete".equals(action)){
+			handleDeleteButton(request, response);
 			return;
 		}else if("Back".equals(action)){
 			handleBackButton(request, response);
@@ -48,25 +48,21 @@ public class DeleteServlet extends HttpServlet{
 		
 		String id = request.getParameter("id");
 		
-		UserEntity entity = userService.readUser(Long.valueOf(id));
+		UserEntity user = userService.readUser(Long.valueOf(id));
 		
-		request.setAttribute("userName", entity.getName());
-		request.setAttribute("id", entity.getId());
+		request.setAttribute("user", user);
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("pages/deleteJsp.jsp");
 		requestDispatcher.forward(request, response);
 		
 	}
 	
-	private void handleOkButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	private void handleDeleteButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		String userName = request.getParameter("userName");
-		String id = request.getParameter("id");
+		String id = request.getParameter("userId");
 		
-		UserEntity entity = new UserEntity();
-		entity.setId(Long.valueOf(id));
-		entity.setName(userName);
-		userService.deleteUser(entity);
+		UserEntity user = userService.readUser(Long.valueOf(id));
+		userService.deleteUser(user);
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/table.do?action=Display");
 		requestDispatcher.forward(request, response);
