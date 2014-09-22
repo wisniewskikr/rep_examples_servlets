@@ -53,10 +53,10 @@ public class CreateServlet extends HttpServlet{
 	
 	private void handleCreateButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		String userName = request.getParameter("userName");
+		String name = request.getParameter("name");
 		
 		UserEntity entity = new UserEntity();
-		entity.setName(userName);		
+		entity.setName(name);		
 		userService.createUser(entity);
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/table.do?action=Display");
