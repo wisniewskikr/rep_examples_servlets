@@ -1,6 +1,7 @@
 package pl.kwi.servlets;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import pl.kwi.entities.UserEntity;
 import pl.kwi.services.UserService;
+import pl.kwi.validators.CreateValidator;
 
 @WebServlet(value="/create.do")
 public class CreateServlet extends HttpServlet{
@@ -18,10 +20,12 @@ public class CreateServlet extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
 	private UserService userService;
+	private CreateValidator createValidator;
 	
 	
 	public CreateServlet(){
 		userService = new UserService();
+		createValidator = new CreateValidator();
 	}
 	
 
@@ -52,6 +56,12 @@ public class CreateServlet extends HttpServlet{
 	}
 	
 	private void handleCreateButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		Map<String, String> errorMessages = createValidator.getErrorMessages(request);
+		if(!errorMessages.isEmpty()) {			
+			displayPage(request, response);
+			return;
+		}
 		
 		String name = request.getParameter("name");
 		
