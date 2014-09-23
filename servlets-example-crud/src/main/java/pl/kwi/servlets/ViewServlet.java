@@ -46,8 +46,7 @@ public class ViewServlet extends HttpServlet{
 		
 		UserEntity entity = userService.readUser(Long.valueOf(id));
 		
-		request.setAttribute("userName", entity.getName());
-		request.setAttribute("id", entity.getId());
+		request.setAttribute("user", entity);
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("pages/viewJsp.jsp");
 		requestDispatcher.forward(request, response);
