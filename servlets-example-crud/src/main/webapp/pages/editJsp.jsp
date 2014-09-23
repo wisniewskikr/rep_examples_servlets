@@ -20,7 +20,7 @@
 <body>
 <form id="form" action="edit.do">
 	<input type="hidden" id="action" name="action"/>
-	<input type="hidden" id="userId" name="userId" value="${requestScope.user.id}"/>
+	<input type="hidden" id="id" name="id" value="${requestScope.user.id}"/>
 
 	<div class="page">
 		<div id="title" class="title"><h2>Hello World</h2></div>

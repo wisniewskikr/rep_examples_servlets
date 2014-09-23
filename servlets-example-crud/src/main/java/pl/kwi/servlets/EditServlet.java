@@ -1,6 +1,7 @@
 package pl.kwi.servlets;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import pl.kwi.entities.UserEntity;
 import pl.kwi.services.UserService;
+import pl.kwi.validators.EditValidator;
 
 @WebServlet(value="/edit.do")
 public class EditServlet extends HttpServlet{
@@ -18,9 +20,11 @@ public class EditServlet extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
 	private UserService userService;
+	private EditValidator editValidator;
 	
 	public EditServlet(){
 		userService = new UserService();
+		editValidator = new EditValidator();
 	}
 	
 
@@ -58,8 +62,14 @@ public class EditServlet extends HttpServlet{
 	
 	private void handleUpdateButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
+		Map<String, String> errorMessages = editValidator.getErrorMessages(request);
+		if(!errorMessages.isEmpty()) {			
+			displayPage(request, response);
+			return;
+		}
+		
 		String userName = request.getParameter("name");
-		String id = request.getParameter("userId");
+		String id = request.getParameter("id");
 		
 		UserEntity entity = new UserEntity();
 		entity.setId(Long.valueOf(id));
