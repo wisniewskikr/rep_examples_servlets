@@ -2,6 +2,7 @@ package pl.kwi.servlets;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import pl.kwi.entities.UserEntity;
 import pl.kwi.services.UserService;
+import pl.kwi.validators.TableValidator;
 
 @WebServlet(value="/table.do")
 public class TableServlet extends HttpServlet{
@@ -19,10 +21,12 @@ public class TableServlet extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
 	private UserService userService;
+	private TableValidator validator;
 	
 	
 	public TableServlet(){
 		userService = new UserService();
+		validator = new TableValidator();
 	}
 	
 
@@ -62,13 +66,19 @@ public class TableServlet extends HttpServlet{
 	}
 	
 	private void handleCreateButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
+			
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/create.do?action=Display");
 		requestDispatcher.forward(request, response);
 		
 	}
 	
 	private void handleViewButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		Map<String, String> errorMessages = validator.getErrorMessages(request);
+		if(!errorMessages.isEmpty()) {			
+			displayPage(request, response);
+			return;
+		}
 		
 		String id = request.getParameter("selectedUsersIds");
 		
@@ -79,6 +89,12 @@ public class TableServlet extends HttpServlet{
 	
 	private void handleEditButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
+		Map<String, String> errorMessages = validator.getErrorMessages(request);
+		if(!errorMessages.isEmpty()) {			
+			displayPage(request, response);
+			return;
+		}
+		
 		String id = request.getParameter("selectedUsersIds");
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/edit.do?action=Display&id=" + id);
@@ -87,6 +103,12 @@ public class TableServlet extends HttpServlet{
 	}	
 	
 	private void handleDeleteButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		Map<String, String> errorMessages = validator.getErrorMessages(request);
+		if(!errorMessages.isEmpty()) {			
+			displayPage(request, response);
+			return;
+		}
 		
 		String id = request.getParameter("selectedUsersIds");
 		
