@@ -33,8 +33,8 @@ public class EditServlet extends HttpServlet{
 		if("Display".equals(action)){
 			displayPage(request, response);
 			return;
-		}else if("OK".equals(action)){
-			handleOkButton(request, response);
+		}else if("Update".equals(action)){
+			handleUpdateButton(request, response);
 			return;
 		}else if("Back".equals(action)){
 			handleBackButton(request, response);
@@ -49,18 +49,17 @@ public class EditServlet extends HttpServlet{
 		
 		UserEntity entity = userService.readUser(Long.valueOf(id));
 		
-		request.setAttribute("userName", entity.getName());
-		request.setAttribute("id", entity.getId());
+		request.setAttribute("user", entity);
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("pages/editJsp.jsp");
 		requestDispatcher.forward(request, response);
 		
 	}
 	
-	private void handleOkButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	private void handleUpdateButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		String userName = request.getParameter("userName");
-		String id = request.getParameter("id");
+		String userName = request.getParameter("name");
+		String id = request.getParameter("userId");
 		
 		UserEntity entity = new UserEntity();
 		entity.setId(Long.valueOf(id));
