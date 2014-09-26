@@ -13,6 +13,12 @@
 		
 		<hibernate.version>4.1.7.Final</hibernate.version>
 		<hibernate.validator.version>4.3.0.Final</hibernate.validator.version>
+		
+		<test.db.persistence-unit.name>pu_test</test.db.persistence-unit.name>
+		<test.db.url>jdbc:mysql://localhost:3306/servlets_example_crud_tests_unit</test.db.url>
+		<test.db.driver>com.mysql.jdbc.Driver</test.db.driver>
+		<test.db.username>root</test.db.username>
+		<test.db.password>admin</test.db.password>
 	</properties>
 	
 	
@@ -36,7 +42,15 @@
 		<profile>
 			<id>deploy</id>									
 			<build>
-				<plugins>					
+				<plugins>
+					<!-- Unit tests -->
+					<plugin>
+			            <groupId>org.apache.maven.plugins</groupId>
+			            <artifactId>maven-surefire-plugin</artifactId>
+			            <configuration>			            	
+			                <skip>true</skip>			                
+			            </configuration>
+			        </plugin> 					
 					<plugin>
 				        <groupId>org.apache.tomcat.maven</groupId>
 		          		<artifactId>tomcat7-maven-plugin</artifactId>
@@ -59,6 +73,52 @@
 				      </plugin>			          
 				</plugins>
 			</build>						
+		</profile>
+		
+		<!-- Profile 'unit': task profile.
+		Runs unit tests. -->
+		<profile>
+			<id>unit</id>
+			<activation>
+	            <activeByDefault>true</activeByDefault>
+	        </activation>			
+			<build>
+				<plugins>
+					<!-- Unit tests -->
+					<plugin>
+			            <groupId>org.apache.maven.plugins</groupId>
+			            <artifactId>maven-surefire-plugin</artifactId>
+			            <configuration>			            	
+			                <skip>true</skip>			                
+			            </configuration>
+			            <executions>
+					       <execution>
+					          <id>unit-tests</id>
+					          <phase>test</phase>
+					          <goals>
+					             <goal>test</goal>
+					          </goals>
+					          <configuration>			            	
+			                	<skip>false</skip>
+			                	<systemPropertyVariables>
+									<test.db.persistence-unit.name>${test.db.persistence-unit.name}</test.db.persistence-unit.name>
+						            <test.db.url>${test.db.url}</test.db.url>
+						            <test.db.driver>${test.db.driver}</test.db.driver>
+						            <test.db.username>${test.db.username}</test.db.username>
+						            <test.db.password>${test.db.password}</test.db.password>
+						        </systemPropertyVariables>
+			                	<includes>
+            						<include>**/*Test.java</include>
+            					</includes>
+			                	<excludes>
+                					<exclude>**/IntgTests.java</exclude>
+            					</excludes>			                
+			            	  </configuration>
+					        </execution>					        
+					     </executions>			              
+			        </plugin>			        
+				</plugins>
+			</build>			
 		</profile>
 	
 	</profiles>
@@ -225,6 +285,25 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.0</version>
+		</dependency>
+		
+		<!-- Unit tests dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.8.5</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.dbunit</groupId>
+			<artifactId>dbunit</artifactId>
+			<version>2.4.8</version>
 		</dependency>
 		
 		<!-- Servlets dependencies -->
