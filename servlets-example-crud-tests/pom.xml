@@ -13,12 +13,6 @@
 		
 		<hibernate.version>4.1.7.Final</hibernate.version>
 		<hibernate.validator.version>4.3.0.Final</hibernate.validator.version>
-		
-		<test.db.persistence-unit.name>pu_test</test.db.persistence-unit.name>
-		<test.db.url>jdbc:mysql://localhost:3306/servlets_example_crud_tests_unit</test.db.url>
-		<test.db.driver>com.mysql.jdbc.Driver</test.db.driver>
-		<test.db.username>root</test.db.username>
-		<test.db.password>admin</test.db.password>
 	</properties>
 	
 	
@@ -81,7 +75,14 @@
 			<id>unit</id>
 			<activation>
 	            <activeByDefault>true</activeByDefault>
-	        </activation>			
+	        </activation>
+	        <properties>
+	        	<test.db.persistence-unit.name>${test.db.unit.persistence-unit.name}</test.db.persistence-unit.name>
+				<test.db.url>${test.db.unit.url}</test.db.url>
+				<test.db.driver>${test.db.unit.driver}</test.db.driver>
+				<test.db.username>${test.db.unit.username}</test.db.username>
+				<test.db.password>${test.db.unit.password}</test.db.password>
+	        </properties>			
 			<build>
 				<plugins>
 					<!-- Unit tests -->
