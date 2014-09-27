@@ -21,13 +21,30 @@
 		<!-- Profile 'loc' (abbreviation for 'local'): location profile. 
 		Indicates local computer as a place for task profiles. -->
 		<profile>
-			<id>loc</id>			
+			<id>loc</id>
+			<activation>
+	            <activeByDefault>true</activeByDefault>
+	        </activation>			
 			<properties>
-				<!-- Server data -->
+				<!-- Local server -->
 				<server.url>${loc.server.url}</server.url>
 				<server.username>${loc.server.username}</server.username>
 				<server.password>${loc.server.password}</server.password>
 				<server.path>/${project.artifactId}</server.path>
+				
+				<!-- Local main DB -->
+				<main.db.persistence-unit.name>${loc.main.db.persistence-unit.name}</main.db.persistence-unit.name>
+				<main.db.url>${loc.main.db.url}</main.db.url>
+				<main.db.driver>${loc.main.db.driver}</main.db.driver>
+				<main.db.username>${loc.main.db.username}</main.db.username>
+				<main.db.password>${loc.main.db.password}</main.db.password>
+				
+				<!-- Local test DB unit -->
+				<test.db.unit.persistence-unit.name>${loc.test.db.unit.persistence-unit.name}</test.db.unit.persistence-unit.name>
+				<test.db.unit.url>${loc.test.db.unit.url}</test.db.unit.url>
+				<test.db.unit.driver>${loc.test.db.unit.driver}</test.db.unit.driver>
+				<test.db.unit.username>${loc.test.db.unit.username}</test.db.unit.username>
+				<test.db.unit.password>${loc.test.db.unit.password}</test.db.unit.password>
 			</properties>							
 		</profile>
 		
@@ -78,11 +95,11 @@
 	        </activation>
 	        <properties>
 	        	<test.db.persistence-unit.name>${test.db.unit.persistence-unit.name}</test.db.persistence-unit.name>
-				<test.db.url>${test.db.unit.url}</test.db.url>
-				<test.db.driver>${test.db.unit.driver}</test.db.driver>
-				<test.db.username>${test.db.unit.username}</test.db.username>
-				<test.db.password>${test.db.unit.password}</test.db.password>
-	        </properties>			
+	            <test.db.url>${test.db.unit.url}</test.db.url>
+	            <test.db.driver>${test.db.unit.driver}</test.db.driver>
+	            <test.db.username>${test.db.unit.username}</test.db.username>
+	            <test.db.password>${test.db.unit.password}</test.db.password>
+	        </properties>
 			<build>
 				<plugins>
 					<!-- Unit tests -->
