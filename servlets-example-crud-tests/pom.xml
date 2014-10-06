@@ -33,7 +33,7 @@
 				<server.path>/${project.artifactId}</server.path>
 				
 				<!-- Local main DB -->
-				<main.db.persistence-unit.name>${loc.main.db.persistence-unit.name}</main.db.persistence-unit.name>
+				<main.db.unit.persistence-unit.name>${loc.main.db.unit.persistence-unit.name}</main.db.unit.persistence-unit.name>
 				<main.db.url>${loc.main.db.url}</main.db.url>
 				<main.db.driver>${loc.main.db.driver}</main.db.driver>
 				<main.db.username>${loc.main.db.username}</main.db.username>
@@ -159,7 +159,6 @@
 				<test.intg.path.host>http://localhost:${test.intg.port}/</test.intg.path.host>
 				<test.intg.path.context>${project.artifactId}</test.intg.path.context>
 				
-				<test.db.persistence-unit.name>${test.db.intg.persistence-unit.name}</test.db.persistence-unit.name>
 	            <test.db.url>${test.db.intg.url}</test.db.url>
 	            <test.db.driver>${test.db.intg.driver}</test.db.driver>
 	            <test.db.username>${test.db.intg.username}</test.db.username>
@@ -187,7 +186,6 @@
 						            <test.intg.path.host>${test.intg.path.host}</test.intg.path.host>
 						            <test.intg.path.context>${test.intg.path.context}</test.intg.path.context>
 						            
-						            <test.db.persistence-unit.name>${test.db.persistence-unit.name}</test.db.persistence-unit.name>
 						            <test.db.url>${test.db.url}</test.db.url>
 						            <test.db.driver>${test.db.driver}</test.db.driver>
 						            <test.db.username>${test.db.username}</test.db.username>
@@ -452,12 +450,12 @@
 		</dependency>
 		
 		<!-- Servlets dependencies -->
-		<dependency>
+		<!-- >dependency>
 		    <groupId>javax</groupId>
 		    <artifactId>javaee-api</artifactId>
 		    <version>6.0</version>
 		    <scope>provided</scope>
-		</dependency>
+		</dependency -->
 				
 	</dependencies>
 

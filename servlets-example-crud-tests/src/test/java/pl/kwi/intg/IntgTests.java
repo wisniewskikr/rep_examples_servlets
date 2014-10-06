@@ -20,6 +20,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import pl.kwi.db.jpa.DbUnitUtil;
 import pl.kwi.intg.pages.TableIntgTestPage;
 
 @RunWith(Arquillian.class)
@@ -30,6 +31,11 @@ public class IntgTests {
 	private final static String PATH_CONTEXT = System.getProperty("test.intg.path.context");
 	private final static String WAR_FILE = PATH_CONTEXT + ".war";
 	private static final String WEBAPP_SRC = "src/main/webapp"; 
+	
+	private final static String DB_URL = System.getProperty("test.db.url");
+	private final static String DB_USERNAME = System.getProperty("test.db.username");
+	private final static String DB_PASSWORD = System.getProperty("test.db.password");
+	private final static String DB_DRIVER = System.getProperty("test.db.driver");
 	
 	private TableIntgTestPage tablePage;
 	
@@ -54,7 +60,7 @@ public class IntgTests {
         		.create(WebArchive.class, WAR_FILE)
         		.addPackages(true, "pl.kwi")
         		.addAsLibraries(lib)
-        		.addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml");;
+        		.addAsResource("intg-tests/persistence.xml", "META-INF/persistence.xml");;
         
         war.merge(ShrinkWrap.create(GenericArchive.class)
         		.as(ExplodedImporter.class)  
@@ -77,14 +83,21 @@ public class IntgTests {
 	}
 	
 	@Test
-	public void tmp() {
+	public void tableTestCase() {
+		
+
+		DbUnitUtil.executeDataFile("/dbunit/userDaoTest.xml", DB_DRIVER, DB_URL, DB_USERNAME, DB_PASSWORD);
 		
 		tablePage.initBrowserByUrl(PATH_HOST + PATH_CONTEXT);
 		
 		tablePage.checkIfPageLoaded();
 		
+		tablePage.checkBodyInElementByXPath("//label[@for='selectedUsersIds1']", "User1");
+		tablePage.checkBodyInElementByXPath("//label[@for='selectedUsersIds2']", "User2");
+		tablePage.checkBodyInElementByXPath("//label[@for='selectedUsersIds3']", "User3");
 		
 		tablePage.closeBrowser();
+		
 		
 	}
 	
