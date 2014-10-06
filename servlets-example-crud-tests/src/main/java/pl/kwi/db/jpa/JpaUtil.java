@@ -6,6 +6,11 @@ import javax.persistence.Persistence;
 
 public class JpaUtil {
 	
+	public static EntityManager createEntityManager(){
+		String persistenceUnitName = System.getProperty("main.db.unit.persistence-unit.name");
+		return Persistence.createEntityManagerFactory(persistenceUnitName).createEntityManager();		
+	}
+	
 	public static EntityManager createEntityManager(String persistenceUnitName){		
 		return Persistence.createEntityManagerFactory(persistenceUnitName).createEntityManager();		
 	}

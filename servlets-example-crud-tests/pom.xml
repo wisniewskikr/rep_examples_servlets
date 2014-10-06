@@ -252,6 +252,7 @@
 		        <version>1.0-alpha-2</version>
 		        <executions>
 		          <execution>
+		          	<id>read-properties</id>
 		            <phase>initialize</phase>
 		            <goals>
 		              <goal>read-project-properties</goal>
@@ -262,6 +263,23 @@
 		              </files>
 		            </configuration>
 		          </execution>
+		          
+		           <execution>
+		           		<id>set-properties</id>
+		           		<phase>initialize</phase>
+			            <goals>
+			                <goal>set-system-properties</goal>
+			            </goals>
+			            <configuration>
+			                <properties>
+			                    <property>
+			                        <name>main.db.unit.persistence-unit.name</name>
+			                        <value>${main.db.unit.persistence-unit.name}</value>
+			                    </property>
+			                </properties>
+			            </configuration>
+			        </execution>
+		        
 		        </executions>
 		      </plugin>
 		      
@@ -293,6 +311,9 @@
         								<goals>
         									<goal>
         										read-project-properties
+        									</goal>
+        									<goal>
+        										set-system-properties
         									</goal>
         								</goals>
         							</pluginExecutionFilter>

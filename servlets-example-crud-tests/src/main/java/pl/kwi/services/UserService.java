@@ -18,7 +18,7 @@ public class UserService {
 	
 	public Long createUser(UserEntity user){
 		
-		em = JpaUtil.createEntityManager("pu");
+		em = JpaUtil.createEntityManager();
 		transaction = JpaUtil.beginTransaction(em);
 		
 		UserDao dao = new UserDao(em);		
@@ -35,7 +35,7 @@ public class UserService {
 		
 		UserEntity entity;
 		
-		em = JpaUtil.createEntityManager("pu");
+		em = JpaUtil.createEntityManager();
 		transaction = JpaUtil.beginTransaction(em);
 		
 		UserDao dao = new UserDao(em);		
@@ -50,7 +50,7 @@ public class UserService {
 	
 	public void updateUser(UserEntity user){
 		
-		em = JpaUtil.createEntityManager("pu");
+		em = JpaUtil.createEntityManager();
 		transaction = JpaUtil.beginTransaction(em);
 		
 		UserDao dao = new UserDao(em);		
@@ -63,7 +63,7 @@ public class UserService {
 	
 	public void deleteUser(UserEntity user){
 		
-		em = JpaUtil.createEntityManager("pu");
+		em = JpaUtil.createEntityManager();
 		transaction = JpaUtil.beginTransaction(em);
 		
 		UserDao dao = new UserDao(em);		
@@ -78,7 +78,7 @@ public class UserService {
 		
 		List<UserEntity> list;
 		
-		em = JpaUtil.createEntityManager("pu");
+		em = JpaUtil.createEntityManager();
 		transaction = JpaUtil.beginTransaction(em);
 		
 		UserDao dao = new UserDao(em);
