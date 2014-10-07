@@ -159,6 +159,7 @@
 				<test.intg.path.host>http://localhost:${test.intg.port}/</test.intg.path.host>
 				<test.intg.path.context>${project.artifactId}</test.intg.path.context>
 				
+	            <test.db.persistence-unit.name>${test.db.intg.persistence-unit.name}</test.db.persistence-unit.name>
 	            <test.db.url>${test.db.intg.url}</test.db.url>
 	            <test.db.driver>${test.db.intg.driver}</test.db.driver>
 	            <test.db.username>${test.db.intg.username}</test.db.username>
@@ -186,6 +187,7 @@
 						            <test.intg.path.host>${test.intg.path.host}</test.intg.path.host>
 						            <test.intg.path.context>${test.intg.path.context}</test.intg.path.context>
 						            
+						            <test.db.persistence-unit.name>${test.db.persistence-unit.name}</test.db.persistence-unit.name>
 						            <test.db.url>${test.db.url}</test.db.url>
 						            <test.db.driver>${test.db.driver}</test.db.driver>
 						            <test.db.username>${test.db.username}</test.db.username>
