@@ -1,26 +1,27 @@
 package pl.kwi.intg;
 
 
-import java.io.File;
 
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Filters;
 import org.jboss.shrinkwrap.api.GenericArchive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.importer.ExplodedImporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.resolver.api.maven.Maven;
-import org.jboss.shrinkwrap.resolver.api.maven.ScopeType;
+import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
+import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
+import org.jboss.shrinkwrap.resolver.api.maven.filter.ScopeFilter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import pl.kwi.db.jpa.DbUnitUtil;
+import pl.kwi.intg.pages.CreateIntgTestPage;
 import pl.kwi.intg.pages.TableIntgTestPage;
 
 @RunWith(Arquillian.class)
@@ -38,10 +39,8 @@ public class IntgTests {
 	private final static String DB_DRIVER = System.getProperty("test.db.driver");
 	
 	private TableIntgTestPage tablePage;
+	private CreateIntgTestPage createPage;
 	
-	
-	@Drone
-	WebDriver driver;
 	
 	
 	// ATTENTION!!!
@@ -49,17 +48,15 @@ public class IntgTests {
 	// makes that @Drone is not null
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
-        File[] lib = Maven
-        		.resolver()
-        		.loadPomFromFile("pom.xml")
-        		.importDependencies(ScopeType.COMPILE)
-                .resolve()
-                .withTransitivity().as(File.class);
+    	MavenDependencyResolver resolver = DependencyResolvers
+				.use(MavenDependencyResolver.class)
+				.loadMetadataFromPom("pom.xml")
+				.includeDependenciesFromPom("pom.xml");
          
         WebArchive war =  ShrinkWrap
         		.create(WebArchive.class, WAR_FILE)
         		.addPackages(true, "pl.kwi")
-        		.addAsLibraries(lib)
+        		.addAsLibraries(resolver.resolveAsFiles(new ScopeFilter("", "compile", "runtime")))
         		.addAsResource("intg-tests/persistence.xml", "META-INF/persistence.xml");;
         
         war.merge(ShrinkWrap.create(GenericArchive.class)
@@ -76,9 +73,11 @@ public class IntgTests {
 	@Before
 	public void setUp(){
 		
+		WebDriver driver = new FirefoxDriver();
 		Wait<WebDriver> wait = new WebDriverWait(driver, 10);		
 		
 		tablePage = new TableIntgTestPage(driver, wait);
+		createPage = new CreateIntgTestPage(driver, wait);
 		
 	}
 	
@@ -101,7 +100,35 @@ public class IntgTests {
 		
 	}
 	
-	
+	@Test
+	public void createTestCase() {
+		
+		DbUnitUtil.clearDataFile("/dbunit/userDaoTest.xml", DB_DRIVER, DB_URL, DB_USERNAME, DB_PASSWORD);
+				
+		tablePage.initBrowserByUrl(PATH_HOST + PATH_CONTEXT);
+
+		
+		tablePage.checkIfPageLoaded();
+		tablePage.checkTextInFieldById("noData", "No Data");
+		tablePage.clickLinkByText("Create");
+		
+		createPage.checkIfPageLoaded();
+		createPage.pressButtonById("back");
+		
+		tablePage.checkIfPageLoaded();
+		tablePage.checkTextInFieldById("noData", "No Data");
+		tablePage.clickLinkByText("Create");
+		
+		createPage.checkIfPageLoaded();
+		createPage.typeTextInFieldById("name", "User1");
+		createPage.pressButtonById("create");
+		
+		tablePage.checkIfPageLoaded();
+		tablePage.checkBodyInElementByXPath("//label", "User1");
+		
+		tablePage.closeBrowser();
+		
+	}
 	
 
 }
