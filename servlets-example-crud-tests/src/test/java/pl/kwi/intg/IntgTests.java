@@ -23,6 +23,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import pl.kwi.db.jpa.DbUnitUtil;
 import pl.kwi.intg.pages.CreateIntgTestPage;
 import pl.kwi.intg.pages.TableIntgTestPage;
+import pl.kwi.intg.pages.ViewIntgTestPage;
 
 @RunWith(Arquillian.class)
 public class IntgTests {
@@ -40,6 +41,7 @@ public class IntgTests {
 	
 	private TableIntgTestPage tablePage;
 	private CreateIntgTestPage createPage;
+	private ViewIntgTestPage viewPage;
 	
 	
 	
@@ -78,6 +80,7 @@ public class IntgTests {
 		
 		tablePage = new TableIntgTestPage(driver, wait);
 		createPage = new CreateIntgTestPage(driver, wait);
+		viewPage = new ViewIntgTestPage(driver, wait);
 		
 	}
 	
@@ -128,6 +131,51 @@ public class IntgTests {
 		
 		tablePage.closeBrowser();
 		
+	}
+	
+	@Test
+	public void readTestCase() {
+		
+		DbUnitUtil.executeDataFile("/dbunit/userDaoTest.xml", DB_DRIVER, DB_URL, DB_USERNAME, DB_PASSWORD);
+		
+		tablePage.initBrowserByUrl(PATH_HOST + PATH_CONTEXT);
+		
+		tablePage.checkIfPageLoaded();		
+		tablePage.pressButtonById("selectedUsersIds1");
+		tablePage.clickLinkByText("View");
+		
+		viewPage.checkIfPageLoaded();
+		viewPage.checkAttributeInElementdById("name", "value", "User1");
+		viewPage.pressButtonById("back");
+				
+		tablePage.checkIfPageLoaded();
+		
+		tablePage.closeBrowser();
+		
+				
+	}
+	
+	@Test
+	public void readTestCaseValidation() {
+		
+		DbUnitUtil.executeDataFile("/dbunit/userDaoTest.xml", DB_DRIVER, DB_URL, DB_USERNAME, DB_PASSWORD);
+		
+		tablePage.initBrowserByUrl(PATH_HOST + PATH_CONTEXT);
+		
+		tablePage.checkIfPageLoaded();	
+		tablePage.clickLinkByText("View");
+		
+		tablePage.checkIfPageLoaded();	
+		tablePage.checkTextInFieldById("errorMessage", "Select at least on row");		
+		tablePage.pressButtonById("selectedUsersIds1");
+		tablePage.pressButtonById("selectedUsersIds2");
+		tablePage.clickLinkByText("View");
+		
+		tablePage.checkIfPageLoaded();	
+		tablePage.checkTextInFieldById("errorMessage", "Only one row can be selected");
+		
+		tablePage.closeBrowser();
+						
 	}
 	
 
