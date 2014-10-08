@@ -22,6 +22,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import pl.kwi.db.jpa.DbUnitUtil;
 import pl.kwi.intg.pages.CreateIntgTestPage;
+import pl.kwi.intg.pages.DeleteIntgTestPage;
 import pl.kwi.intg.pages.EditIntgTestPage;
 import pl.kwi.intg.pages.TableIntgTestPage;
 import pl.kwi.intg.pages.ViewIntgTestPage;
@@ -44,6 +45,7 @@ public class IntgTests {
 	private CreateIntgTestPage createPage;
 	private ViewIntgTestPage viewPage;
 	private EditIntgTestPage editPage;
+	private DeleteIntgTestPage deletePage;
 	
 	
 	
@@ -84,6 +86,7 @@ public class IntgTests {
 		createPage = new CreateIntgTestPage(driver, wait);
 		viewPage = new ViewIntgTestPage(driver, wait);
 		editPage = new EditIntgTestPage(driver, wait);
+		deletePage = new DeleteIntgTestPage(driver, wait);
 		
 	}
 	
@@ -227,6 +230,65 @@ public class IntgTests {
 		tablePage.pressButtonById("selectedUsersIds1");
 		tablePage.pressButtonById("selectedUsersIds2");
 		tablePage.clickLinkByText("Edit");
+		
+		tablePage.checkIfPageLoaded();	
+		tablePage.checkTextInFieldById("errorMessage", "Only one row can be selected");
+		
+		tablePage.closeBrowser();
+						
+	}
+	
+	@Test
+	public void deleteTestCase() {
+		
+		DbUnitUtil.executeDataFile("/dbunit/userDaoTest.xml", DB_DRIVER, DB_URL, DB_USERNAME, DB_PASSWORD);
+		
+		tablePage.initBrowserByUrl(PATH_HOST + PATH_CONTEXT);
+		
+		tablePage.checkIfPageLoaded();	
+		tablePage.checkBodyInElementByXPath("//label[@for='selectedUsersIds1']", "User1");
+		tablePage.checkBodyInElementByXPath("//label[@for='selectedUsersIds2']", "User2");
+		tablePage.checkBodyInElementByXPath("//label[@for='selectedUsersIds3']", "User3");
+		tablePage.pressButtonById("selectedUsersIds1");
+		tablePage.clickLinkByText("Delete");
+		
+		deletePage.checkIfPageLoaded();
+		deletePage.checkBodyInElementByXPath("//div[@id='confirmationText']", "Do you really want delete user: User1?");
+		deletePage.pressButtonById("back");
+				
+		tablePage.checkIfPageLoaded();
+		tablePage.checkBodyInElementByXPath("//label[@for='selectedUsersIds1']", "User1");
+		tablePage.checkBodyInElementByXPath("//label[@for='selectedUsersIds2']", "User2");
+		tablePage.checkBodyInElementByXPath("//label[@for='selectedUsersIds3']", "User3");
+		tablePage.pressButtonById("selectedUsersIds1");
+		tablePage.clickLinkByText("Delete");
+		
+		deletePage.checkIfPageLoaded();
+		deletePage.checkBodyInElementByXPath("//div[@id='confirmationText']", "Do you really want delete user: User1?");
+		deletePage.pressButtonById("delete");
+		
+		tablePage.checkIfPageLoaded();
+		tablePage.checkElementNotExistsByXPath("//label[@for='selectedUsersIds1']");
+		
+		tablePage.closeBrowser();
+						
+	}
+	
+	@Test
+	public void deleteTestCaseValidation() {
+		
+		DbUnitUtil.executeDataFile("/dbunit/userDaoTest.xml", DB_DRIVER, DB_URL, DB_USERNAME, DB_PASSWORD);
+		
+		tablePage.initBrowserByUrl(PATH_HOST + PATH_CONTEXT);
+		
+		tablePage.checkIfPageLoaded();	
+		tablePage.clickLinkByText("Delete");
+		
+		tablePage.checkIfPageLoaded();	
+		tablePage.checkTextInFieldById("errorMessage", "Select at least on row");		
+		tablePage.pressButtonById("selectedUsersIds1");
+		tablePage.pressButtonById("selectedUsersIds2");
+		tablePage.clickLinkByText("Delete");
 		
 		tablePage.checkIfPageLoaded();	
 		tablePage.checkTextInFieldById("errorMessage", "Only one row can be selected");
